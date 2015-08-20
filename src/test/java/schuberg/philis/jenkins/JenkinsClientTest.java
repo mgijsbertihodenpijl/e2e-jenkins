@@ -20,10 +20,10 @@ public class JenkinsClientTest {
     }
 
     @Test
-    public void testSeedJob(){
+    public void testHasJob(){
         try {
             client.parse(baseUrl);
-            assertTrue(client.getJobStatus("job_jenkins-job-DSL-seed"));
+            assertTrue(client.hasJob("job_jenkins-job-DSL-seed"));
         } catch(Exception e){
             e.printStackTrace();
             fail("Exception occured " + e.getMessage() );
@@ -43,6 +43,5 @@ public class JenkinsClientTest {
             e.printStackTrace();
             fail("Exception occured " + e.getMessage() );
         }
-
     }
 }

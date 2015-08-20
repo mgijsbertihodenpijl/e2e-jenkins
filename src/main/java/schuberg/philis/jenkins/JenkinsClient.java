@@ -56,15 +56,11 @@ public class JenkinsClient {
     }
 
     private Element getFirstElement(String selector) {
-        return getElements(selector).first();
+        return this.getElements(selector).first();
     }
 
-    public Boolean getJobStatus(String job){
-        Element td = getFirstElement("#"+ job);
-        if(td != null){
-            return td.className().trim().toLowerCase().equals("job-status-blue") ? true : false;
-        }
-        return false;
+    public boolean hasJob(String job){
+        return this.getFirstElement("#"+ job) != null ? true: false;
     }
 
     public String getApiToken(){
