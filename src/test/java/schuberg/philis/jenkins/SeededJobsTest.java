@@ -1,7 +1,15 @@
 package schuberg.philis.jenkins;
 
-/**
- * Created by mgijsbertihodenpijl on 24/08/15.
- */
+
+import org.junit.Test;
+
+import static org.junit.Assert.fail;
+
 public class SeededJobsTest {
+
+    @Test
+    public void testSeededJobs(){
+        System.out.println("testSeededJobs");
+        fail("This test fails");
+    }
 }
