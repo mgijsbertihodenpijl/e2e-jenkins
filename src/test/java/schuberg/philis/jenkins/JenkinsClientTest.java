@@ -44,4 +44,15 @@ public class JenkinsClientTest {
             fail("Exception occured " + e.getMessage() );
         }
     }
+
+    @Test
+    public void testBuild(){
+        try {
+            String jobToken = "s22dToken23";
+            client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
+        } catch(Exception e){
+            e.printStackTrace();
+            fail("Exception occured " + e.getMessage() );
+        }
+    }
 }
