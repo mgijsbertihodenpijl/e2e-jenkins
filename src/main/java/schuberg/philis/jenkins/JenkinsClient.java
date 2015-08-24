@@ -2,6 +2,9 @@ package schuberg.philis.jenkins;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -48,6 +51,9 @@ public class JenkinsClient {
     }
 
     private Elements getElements(String selector){
+        if(this.doc == null){
+            throw new IllegalStateException("Parse the page first!");
+        }
         return this.doc.select(selector);
     }
 
@@ -64,6 +70,24 @@ public class JenkinsClient {
      */
     public boolean hasJob(String job){
         return this.getFirstElement("#"+ job) != null ? true: false;
+    }
+
+    /**
+     * Return the job names which are seeded by the seed job. The seed job is also included in the list.
+     * Executed Jobs (with buildNumber) are not listed
+     *
+     * @return List with seeded Jobs.
+     */
+    public List<String> getSeededJobNames(){
+        List<String> names = new ArrayList<String>();
+        for(Element job:  this.getElements("#projectstatus tr a.model-link")){
+            String jobName = job.text();
+            //Filter the executed jobs which are listed with #buildNumber
+            if(!jobName.startsWith("#")){
+                names.add(job.text());
+            }
+        }
+        return names;
     }
 
     /**
