@@ -8,7 +8,7 @@ node {
     stage 'e2e'
     dir('e2e') {
         git 'https://github.com/mgijsbertihodenpijl/e2e-jenkins'
-        sh 'mvn clean test'
+        sh 'mvn clean test -Dtest=JenkinsClientTest'
     }
     stage 'destroy'
     sh 'kitchen destroy'
