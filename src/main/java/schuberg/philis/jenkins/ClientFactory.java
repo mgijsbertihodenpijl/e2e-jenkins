@@ -17,7 +17,6 @@ import java.net.URI;
 /**
  *  This factory creates a httpClient connection and HttpClientContext with credentials stored in an AuthCache object.
  *  This object is used to preemptively authenticate against known hosts.
- *
  */
 public class ClientFactory {
 
@@ -27,7 +26,6 @@ public class ClientFactory {
     private HttpHost host;
     private HttpClient httpClient;
     private HttpClientContext httpClientContext;
-
 
     private ClientFactory( String url, String userName, String passWord) {
         this.passWord = passWord;
