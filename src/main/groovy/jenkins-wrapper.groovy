@@ -12,4 +12,6 @@ node {
         sh 'mvn clean test -Dtest=JenkinsClientTest -DseededJobs=${jobs}'
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
     }
+    stage 'destroy'
+    sh 'kitchen destroy master.*71'
 }
