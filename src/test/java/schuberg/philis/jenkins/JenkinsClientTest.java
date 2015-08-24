@@ -57,18 +57,29 @@ public class JenkinsClientTest {
             client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
             Thread.sleep(10000);
             client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
+            List<String> jobs = new ArrayList<String>();
             boolean foundJobs = false;
             for(int i = 0; i < 5 ; i++){
+                foundJobs = false;
+                System.out.println("Try to find jobs {" + i + "}");
                 Thread.sleep(5000);
                 client.parse(baseUrl);
-                List<String> jobs = client.getSeededJobNames();
+                jobs = client.getSeededJobNames();
                 if(jobs.size() > 1){
-                    foundJobs = true;
-                    assertEquals(expectedSeeds, jobs);
+                    if(expectedSeeds.size() == jobs.size()){
+                        foundJobs = true;
+                        assertEquals(expectedSeeds, jobs);
+                    } else {
+                        System.out.println("Not all jobs loaded, try again : " + i);
+                    }
                 }
             }
             if(foundJobs == false){
-                fail("Seed jobs are not found after 5 retries");
+                StringBuilder b = new StringBuilder();
+                for(String job : jobs){
+                    b.append(job + " ");
+                }
+                fail("Not all seeded jobs are found after 5 retries { " + b.toString() + "}");
             }
         } catch(Exception e){
             e.printStackTrace();
