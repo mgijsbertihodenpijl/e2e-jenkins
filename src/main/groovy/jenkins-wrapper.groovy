@@ -7,12 +7,8 @@ node {
     sh 'kitchen verify master.*71'
     stage 'e2e'
     dir('e2e') {
-        def jobs = 'example1,example2,jenkins-job-DSL-seed,Job-DSL-Plugin,wf-1'
-        def retry = '3'
-        def wait = '2000'
-        def token = 's22dToken23'
         git 'https://github.com/mgijsbertihodenpijl/e2e-jenkins'
-        sh 'mvn clean test -Dtest=JenkinsClientTest -Dtoken=${token} -DseededJobs=${jobs} -Dretry=${retry} -Dwait=${wait}'
+        sh 'mvn clean test -Dtest=JenkinsClientTest -Dtoken=s22dToken23 -DseededJobs=example1,example2,jenkins-job-DSL-seed,Job-DSL-Plugin,wf-1 -Dretry=2000 -Dwait=3'
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
     }
 }

@@ -148,7 +148,7 @@ public class JenkinsClientTest {
 
     private String getToken(String defaultToken){
         String token = System.getProperty("token");
-        if(token == null){
+        if(token == null || token.isEmpty() ){
             return defaultToken;
         }
         return token;
