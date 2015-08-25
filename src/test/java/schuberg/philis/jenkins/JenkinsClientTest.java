@@ -17,11 +17,15 @@ public class JenkinsClientTest {
     String baseUrl = "http://localhost:8080";
     JenkinsClient client;
     List<String> expectedSeeds = new ArrayList<String>();
+    String jobToken;
+    String seedJob;
 
     @Before
     public void setUp(){
         client = new JenkinsClient("admin","admin");
         expectedSeeds = getExpectedSeededJobs();
+        jobToken = getToken("s22dToken23");
+        seedJob = "jenkins-job-DSL-seed";
     }
 
     @Test
@@ -53,17 +57,15 @@ public class JenkinsClientTest {
     @Test
     public void testBuild(){
         try {
-            String jobToken = "s22dToken23";
-            String jobName = "jenkins-job-DSL-seed";
-            client.build(baseUrl, jobName, jobToken);
+            client.build(baseUrl, seedJob, jobToken);
             long wait = getWait(5000);
             Thread.sleep(wait * 5);
             client.parse(baseUrl);
-            System.out.println("status=[" + client.getJobStatus(jobName) + "]");
+            System.out.println("status=[" + client.getJobStatus(seedJob) + "]");
             client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
             Thread.sleep(wait * 5);
             client.parse(baseUrl);
-            System.out.println("status=[" + client.getJobStatus(jobName) + "]");
+            System.out.println("status=[" + client.getJobStatus(seedJob) + "]");
             List<String> jobs = new ArrayList<String>();
             boolean foundJobs = false;
             int tries = getRetry(5);
@@ -142,5 +144,13 @@ public class JenkinsClientTest {
         } catch (NumberFormatException e){}
         return defaultWait;
 
+    }
+
+    private String getToken(String defaultToken){
+        String token = System.getProperty("token");
+        if(token == null){
+            return defaultToken;
+        }
+        return token;
     }
 }

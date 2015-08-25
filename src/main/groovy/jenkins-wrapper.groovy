@@ -10,8 +10,9 @@ node {
         def jobs = 'example1,example2,jenkins-job-DSL-seed,Job-DSL-Plugin,wf-1'
         def retry = '3'
         def wait = '2000'
+        def token = 's22dToken23'
         git 'https://github.com/mgijsbertihodenpijl/e2e-jenkins'
-        sh 'mvn clean test -Dtest=JenkinsClientTest -DseededJobs=${jobs} -Dretry=${retry} -Dwait=${wait}'
+        sh 'mvn clean test -Dtest=JenkinsClientTest -Dtoken=${token} -DseededJobs=${jobs} -Dretry=${retry} -Dwait=${wait}'
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
     }
 }
