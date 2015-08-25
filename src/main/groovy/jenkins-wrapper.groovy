@@ -8,7 +8,7 @@ node {
     stage 'e2e'
     dir('e2e') {
         git 'https://github.com/mgijsbertihodenpijl/e2e-jenkins'
-        sh 'mvn clean test -Dtest=JenkinsClientTest -Dtoken=s22dToken23 -DseededJobs=example1,example2,jenkins-job-DSL-seed,Job-DSL-Plugin,wf-1 -Dretry=2000 -Dwait=3'
+        sh './test.sh'
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
     }
 }
