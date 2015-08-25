@@ -61,6 +61,10 @@ public class JenkinsClient {
         return this.getElements(selector).first();
     }
 
+    private Element getJob(String job){
+        return this.getFirstElement("#job_" + job);
+    }
+
     /**
      * This method checks if a Jenkins job is available. This is used to check if the Jenkins jobs are loaded
      * into the Jenkins installation after a kitchen converge.
@@ -69,7 +73,17 @@ public class JenkinsClient {
      * @return true if Job is available
      */
     public boolean hasJob(String job){
-        return this.getFirstElement("#"+ job) != null ? true: false;
+        return this.getJob(job) != null ? true: false;
+    }
+
+    public String getJobStatus(String job){
+        Element j = this.getJob(job);
+        String className = j.className().trim();
+        String status = "";
+        if(className.startsWith("job-status")){
+            status = className.substring("job-status".length() + 1 ,className.length());
+        }
+        return status;
     }
 
     /**

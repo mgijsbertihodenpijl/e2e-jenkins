@@ -28,7 +28,7 @@ public class JenkinsClientTest {
     public void testHasJob(){
         try {
             client.parse(baseUrl);
-            assertTrue(client.hasJob("job_jenkins-job-DSL-seed"));
+            assertTrue(client.hasJob("jenkins-job-DSL-seed"));
         } catch(Exception e){
             e.printStackTrace();
             fail("Exception occured " + e.getMessage() );
@@ -54,10 +54,15 @@ public class JenkinsClientTest {
     public void testBuild(){
         try {
             String jobToken = "s22dToken23";
-            client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
+            String jobName = "jenkins-job-DSL-seed";
+            client.build(baseUrl, jobName, jobToken);
             long wait = getWait(5000);
-            Thread.sleep(wait);
+            Thread.sleep(wait * 5);
+            client.parse(baseUrl);
+            System.out.println("status=[" + client.getJobStatus(jobName) + "]";
             client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
+            client.parse(baseUrl);
+            System.out.println("status=[" + client.getJobStatus(jobName) + "]";
             List<String> jobs = new ArrayList<String>();
             boolean foundJobs = false;
             int tries = getRetry(5);
