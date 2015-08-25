@@ -59,10 +59,11 @@ public class JenkinsClientTest {
             long wait = getWait(5000);
             Thread.sleep(wait * 5);
             client.parse(baseUrl);
-            System.out.println("status=[" + client.getJobStatus(jobName) + "]";
+            System.out.println("status=[" + client.getJobStatus(jobName) + "]");
             client.build(baseUrl, "jenkins-job-DSL-seed", jobToken);
+            Thread.sleep(wait * 5);
             client.parse(baseUrl);
-            System.out.println("status=[" + client.getJobStatus(jobName) + "]";
+            System.out.println("status=[" + client.getJobStatus(jobName) + "]");
             List<String> jobs = new ArrayList<String>();
             boolean foundJobs = false;
             int tries = getRetry(5);
